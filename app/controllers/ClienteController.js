@@ -58,7 +58,10 @@ function find(req,res,next){
           })
 }
 
-
+function testcon(req,res){
+  
+  return res.status(200).send({message:"Heroku test succefull"});
+}
 
 module.exports={
     index,
@@ -66,6 +69,7 @@ module.exports={
     create,
     update,
     remove,
-    find
+    find,
+    testcon
 
 }
