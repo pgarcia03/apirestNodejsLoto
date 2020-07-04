@@ -37,7 +37,7 @@ function update(req,res){
 function remove(req,res){
     if(req.body.error) return status(500).send({error});
     if(!req.body.clientes) return res.status(404).send({message:"NOT FOUND"}) ;
-      req.body.clientes[0].remove().then(cliente=>res.status(200).send({message:"REMOVED",cliente}))
+      req.body.clientes[0].remove().then(clientes=>res.status(200).send({message:"REMOVED",clientes}))
       .catch(error=>res.status(500).send({error}));
 }
 

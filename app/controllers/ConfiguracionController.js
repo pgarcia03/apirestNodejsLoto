@@ -18,7 +18,7 @@ function show(req,res){
 
 function create(req,res){
   new Configuracion(req.body).save()
-           .then(configuracion=>res.status(201).send({configuracion}))
+           .then(configuracions=>res.status(201).send({configuracions}))
            .catch(error=>res.status(500).send({error}));
 }
 
@@ -29,7 +29,7 @@ function update(req,res){
 
   let configuracion=req.body.configuracions[0];
   configuracion=Object.assign(cliente,req.body);
-  configuracion.save().then(configuracion=>res.status(200).send({message:"UPDATE",configuracion}))
+  configuracion.save().then(configuracions=>res.status(200).send({message:"UPDATE",configuracions}))
                  .catch(error=>res.status(500).send(error));
 
 }
@@ -37,7 +37,7 @@ function update(req,res){
 function remove(req,res){
     if(req.body.error) return status(500).send({error});
     if(!req.body.configuracions) return res.status(404).send({message:"NOT FOUND"}) ;
-      req.body.configuracions[0].remove().then(configuracion=>res.status(200).send({message:"REMOVED",configuracion}))
+      req.body.configuracions[0].remove().then(configuracions=>res.status(200).send({message:"REMOVED",configuracions}))
       .catch(error=>res.status(500).send({error}));
 }
 

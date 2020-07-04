@@ -24,9 +24,9 @@ function create(req,res){
              if(!usuarios.length)
              {
                return  new Usuario(req.body).save()
-                                            .then(usuario=>res.status(201).send({usuario}))             
+                                            .then(usuarios=>res.status(201).send({usuarios}))             
              }
-             return res.status(205).send({message:"Usuario  Existente"}) ;          
+             return res.status(302).send({message:"Usuario  Existente"}) ;          
        })     
        .catch(error=>res.status(500).send({error}));
      
@@ -38,7 +38,7 @@ function update(req,res){
 
   let usuario=req.body.usuarios[0];
   usuario=Object.assign(usuario,req.body);
-  usuario.save().then(usuario=>res.status(200).send({message:"UPDATE",usuario}))
+  usuario.save().then(usuarios=>res.status(200).send({message:"UPDATE",usuarios}))
                  .catch(error=>res.status(500).send(error));
 
 }
@@ -46,7 +46,7 @@ function update(req,res){
 function remove(req,res){
     if(req.body.error) return status(500).send({error});
     if(!req.body.usuarios) return res.status(404).send({message:"NOT FOUND"}) ;
-      req.body.usuarios[0].remove().then(usuario=>res.status(200).send({message:"REMOVED",usuario}))
+      req.body.usuarios[0].remove().then(usuarios=>res.status(200).send({message:"REMOVED",usuarios}))
       .catch(error=>res.status(500).send({error}));
 }
 
@@ -94,5 +94,4 @@ module.exports={
     remove,
     find,
     autenticar
-
 }

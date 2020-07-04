@@ -5,13 +5,13 @@ const registroSchema=new mongoose.Schema({
         type: String,
         required: true
     },
-    jugado:
+    numJugado:
     [{
         numero:{ //numero judado
-            type: Number,
+            type: String,
             require: true,
         },
-        monto:{// inversion 
+        inversion:{// inversion 
             type: Number, 
             required: true
         },
@@ -20,29 +20,33 @@ const registroSchema=new mongoose.Schema({
             required:true
         }
     }],
-    date:{
+    date:{ // fecha venta automatica
         type: Date,
         default: Date.now()    
     },
-    sorteoDia:{
-            type:String,
+    sorteoDia:{ // numero del sorteo del dia
+            type:Number,
             required:true
     },
-    vendedor:{
+    descripcionSorteo:{ // sorteo del dia y hora del sorteo
+        type:String,
+        required:true
+    },
+    vendedor:{ //usuario que registra la venta
         type:String,
         required:true
     },   
-    estado:{
+    estado:{   //Vendido,Pagado
         type:String,
     },
-    reciboEmitido:{
+    reciboEmitido:{ //verifica si se imprimio un recibo o boleto (ticket)
         type:Boolean
     },
-    fechaSorteo:{
+    fechaSorteo:{ //fecha valida para el sorteo valido
         type:Date,
         required:true
     },
-    eliminado:{
+    eliminado:{ // por defecto es false o null
         type:Boolean
     }
 

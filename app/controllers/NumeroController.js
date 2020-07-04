@@ -18,7 +18,7 @@ function show(req,res){
 
 function create(req,res){
   new Numero(req.body).save()
-           .then(numero=>res.status(201).send({numero}))
+           .then(numeros=>res.status(201).send({numeros}))
            .catch(error=>res.status(500).send({error}));
 }
 
@@ -29,7 +29,7 @@ function update(req,res){
 
   let numero=req.body.numeros[0];
   numero=Object.assign(numero,req.body);
-  numero.save().then(numero=>res.status(200).send({message:"UPDATE",numero}))
+  numero.save().then(numeros=>res.status(200).send({message:"UPDATE",numeros}))
                  .catch(error=>res.status(500).send(error));
 
 }
@@ -37,7 +37,7 @@ function update(req,res){
 function remove(req,res){
     if(req.body.error) return status(500).send({error});
     if(!req.body.numeros) return res.status(404).send({message:"NOT FOUND"}) ;
-      req.body.numeros[0].remove().then(numero=>res.status(200).send({message:"REMOVED",numero}))
+      req.body.numeros[0].remove().then(numeros=>res.status(200).send({message:"REMOVED",numeros}))
       .catch(error=>res.status(500).send({error}));
 }
 
