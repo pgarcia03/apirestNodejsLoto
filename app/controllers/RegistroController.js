@@ -11,7 +11,12 @@ function index(req,res){
 
 function show(req,res){
     if(req.body.error) return res.status(500).send({error});
-    if(req.body.registros) return res.status(200).send(req.body.registros);
+    if(req.body.registros)
+    {
+      let registros=req.body.registros;
+      return res.status(200).send({registros});
+    }
+    
     return res.status(404).send({message:"NOT FOUND"});
 }
 
@@ -57,25 +62,61 @@ function find(req,res,next){
                 next();
           })
 }
+/*
+function findXFechaSorteo(req,res){
 
-function finds(req,res,next){
-  let query={
+          
+      let query={           
+            "date":{"$gte": ISODate(req.body.fechaSorteo),"$lt":ISODate(req.body.fechaSorteo)},"sorteoDia":req.body.sorteoDia
+      };
 
-    
-  };
-
-  query[req.params.key]=req.params.value
-
-  Registro.find(query)
+      Registro.find(query)
           .then(registros=>{
-                if(!registros.length) return next();
-                req.body.registros=registros;
-                return next();
+                if(!registros.length) return res.status(404).send({message:"Not Found"});
+                return res.status(200).send({registros});
           })
           .catch(error=>{
                 req.body.error=error;
                 next();
           })
+}
+*/
+function findXFechaSorteo(req,res){
+      let ms = Date.parse(req.body.fechaSorteo.substring(0,10));
+      var fecha = new Date(ms);
+    //  res.status(205).send({mes:fecha});
+      
+      //let ms = Date.parse(req.body.fechaSorteo);
+      //let fecha = new Date(ms);
+
+      var now=new Date();
+      var yesterdayMs = fecha.getTime() + 1000*60*60*24*1; 
+      now.setTime( yesterdayMs );
+
+      //console.log(fecha);
+      //console.log(now);
+      var query="";
+      if(req.body.sorteoDia!=0)         
+            query={           
+                  "fechaSorteo":{"$gte": fecha,"$lt":now },"sorteoDia":req.body.sorteoDia
+            };
+      else
+            query={           
+                  "fechaSorteo":{"$gte": fecha,"$lt":now }
+            };
+    //  console.log(query);
+     // res.status(205).send({mes:query});
+
+      Registro.find(query)
+          .then(registros=>{
+                if(!registros.length) return res.status(404).send({message:"Not Found"});
+                return res.status(200).send({registros});
+          })
+          .catch(error=>{
+                req.body.error=error;
+                next();
+          })
+          
 }
 
 
@@ -85,5 +126,6 @@ module.exports={
     create,
     update,
     remove,
-    find
+    find,
+    findXFechaSorteo
 }
