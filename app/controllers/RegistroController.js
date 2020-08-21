@@ -84,17 +84,11 @@ function findXFechaSorteo(req,res){
 function findXFechaSorteo(req,res){
       let ms = Date.parse(req.body.fechaSorteo.substring(0,10));
       var fecha = new Date(ms);
-    //  res.status(205).send({mes:fecha});
-      
-      //let ms = Date.parse(req.body.fechaSorteo);
-      //let fecha = new Date(ms);
 
       var now=new Date();
       var yesterdayMs = fecha.getTime() + 1000*60*60*24*1; 
       now.setTime( yesterdayMs );
 
-      //console.log(fecha);
-      //console.log(now);
       var query="";
       if(req.body.sorteoDia!=0)         
             query={           
@@ -104,18 +98,16 @@ function findXFechaSorteo(req,res){
             query={           
                   "fechaSorteo":{"$gte": fecha,"$lt":now }
             };
-    //  console.log(query);
-     // res.status(205).send({mes:query});
 
       Registro.find(query)
-          .then(registros=>{
+              .then(registros=>{
                 if(!registros.length) return res.status(404).send({message:"Not Found"});
                 return res.status(200).send({registros});
-          })
-          .catch(error=>{
+              })
+              .catch(error=>{
                 req.body.error=error;
                 next();
-          })
+              })
           
 }
 

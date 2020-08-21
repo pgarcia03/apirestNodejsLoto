@@ -8,7 +8,6 @@ function index(req,res){
      }).catch(error=>res.status(500).send({error}));
 }
 
-
 function show(req,res){
     if(req.body.error) return res.status(500).send({error});
     if(req.body.clientes) return res.status(200).send(req.body.clientes);

@@ -84,8 +84,6 @@ function autenticar(req,res)
 
 }
 
-
-
 module.exports={
     index,
     show,
